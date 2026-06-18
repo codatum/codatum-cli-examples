@@ -1,0 +1,23 @@
+name: Validate notebooks
+
+on:
+  pull_request:
+    paths:
+      - "notebooks/**/*.cnb.md"
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    env:
+      CDM_PAT: ${{ secrets.CDM_PAT }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install cdm
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl -fsSL https://cli-dist.codatum.com/install.sh | sh
+
+      - name: Validate
+        run: cdm notebook validate notebooks/
