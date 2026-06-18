@@ -465,7 +465,7 @@ hideFrame: true
 ```
 
 - A dashboard visualizing sales from the theLook ecommerce dataset (`bigquery-public-data.thelook_ecommerce`).
-- Use the "Period" parameter at the top to filter the target period (default: last 12 months).
+- Use the "Period" parameter at the top to filter the target period.
 :::
 
 :::grid-item
