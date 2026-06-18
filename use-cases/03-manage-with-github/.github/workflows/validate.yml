@@ -14,7 +14,10 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Install cdm
-        run: curl -fsSL https://cli-dist.codatum.com/install.sh | sh
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl -fsSL https://cli-dist.codatum.com/install.sh | sh
 
       - name: Validate
         run: cdm notebook validate notebooks/
