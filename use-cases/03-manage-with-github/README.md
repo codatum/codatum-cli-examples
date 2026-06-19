@@ -18,7 +18,7 @@ This use case is about the workflow around your notebooks, so the example ships 
 
 The two workflows:
 
-- **validate.yml** runs on pull requests. It validates the schema (`cdm notebook validate`). Formatting (`cdm notebook format`) rewrites files, so it's done locally before committing rather than in CI. It does not run any SQL, so it stays fast and doesn't touch your data sources. It uses the same `CDM_PAT` secret as the deploy workflow.
+- **validate.yml** runs on pull requests. It validates schema and syntax (`cdm notebook validate`) and checks that job execution metadata has been stripped (`cdm notebook strip --check`). Formatting (`cdm notebook format`) and stripping (`cdm notebook strip`) rewrite files, so they're done locally before committing rather than in CI. It does not run any SQL, so it stays fast and doesn't touch your data sources. It uses the same `CDM_PAT` secret as the deploy workflow.
 - **deploy.yml** runs when changes land on `main`. It pushes the notebooks to Codatum (`cdm notebook push --yes --ignore-job-metadata`). The `--ignore-job-metadata` flag means it reflects only the structure and leaves job execution state untouched, so it doesn't overwrite the latest results that Codatum refreshes on its own. It uses an edit PAT scoped to the target folder.
 
 GitHub manages the notebook *structure* (SQL, charts, parameters, layout). Data refresh (running jobs) happens on the Codatum side, and job execution state is kept out of Git — locally you `cdm notebook strip` before committing, and in CI you push with `--ignore-job-metadata`. This keeps execution churn from showing up as diffs.

@@ -19,5 +19,8 @@ jobs:
           set -euo pipefail
           curl -fsSL https://cli-dist.codatum.com/install.sh | sh
 
-      - name: Validate
+      - name: Validate schema and syntax
         run: cdm notebook validate notebooks/
+
+      - name: Check notebooks are stripped
+        run: cdm notebook strip notebooks/ --check
